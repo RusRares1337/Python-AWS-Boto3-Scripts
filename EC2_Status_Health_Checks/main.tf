@@ -18,9 +18,6 @@ data "aws_ami" "amazon-linux-image" {
   }
 }
 
-output "ami_id" {
-  value = data.aws_ami.amazon-linux-image.id
-}
 
 resource "aws_vpc" "myapp-vpc" {
   cidr_block = var.vpc_cidr_block
@@ -103,9 +100,6 @@ resource "aws_key_pair" "ssh-key" {
   public_key = file(var.ssh_key)
 }
 
-output "server-ip" {
-    value = aws_instance.myapp-server.public_ip
-}
 
 resource "aws_instance" "myapp-server" {
   ami                         = data.aws_ami.amazon-linux-image.id

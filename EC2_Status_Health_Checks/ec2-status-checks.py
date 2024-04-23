@@ -1,3 +1,7 @@
+# Scenario: We have hundred of EC2 servers created with Terraform , we also have autoscalling configured \
+# and new instances get created/deleted all the time and new instances always need some time to initialize.
+# We need to know which instances are in which state !
+
 import boto3
 import schedule
 

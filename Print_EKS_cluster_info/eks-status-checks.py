@@ -1,4 +1,4 @@
-# Script to discover:
+# Script to see information about:
 # 1.EKS cluster status
 # 2.Cluster endpoint
 # 3.Which K8s version

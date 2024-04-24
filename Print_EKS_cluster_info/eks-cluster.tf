@@ -6,11 +6,11 @@ provider "kubernetes" {
 }
 
 data "aws_eks_cluster" "myapp-cluster" {
-    name = module.eks.cluster_id
+    name = module.eks.cluster_name
 }
 
 data "aws_eks_cluster_auth" "myapp-cluster" {
-    name = module.eks.cluster_id
+    name = module.eks.cluster_name
 }
 
 module "eks" {

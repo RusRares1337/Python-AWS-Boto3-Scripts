@@ -5,11 +5,8 @@
 *.tfstate
 *.tfstate.*
 
-# Exclude all .tfvars files, which are likely to contain sentitive data, such as
-# password, private keys, and other secrets. These should not be part of version 
-# control as they are data points which are potentially sensitive and subject 
-# to change depending on the environment.
-#
+# Ignore tf.lock.hcl
+*.terraform.lock.hcl*
 
 # Ignore CLI configuration files
 .terraformrc
@@ -19,4 +16,4 @@ terraform.rc
 .DS_Store
 
 # Ignore Py .idea folders
-.idea/*
+*.idea*

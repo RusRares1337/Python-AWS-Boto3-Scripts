@@ -19,4 +19,4 @@ terraform.rc
 .DS_Store
 
 # Ignore Py .idea folders
-**/.idea/*
+.idea/*

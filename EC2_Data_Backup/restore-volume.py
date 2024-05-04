@@ -1,5 +1,5 @@
-# Script that will recover the latest working state
-# and attach a new volume to EC2 Instance
+# Script that will create a new volume of a snapshot
+# and attach that volume to an EC2 Instance
 
 import boto3
 from operator import itemgetter
@@ -20,11 +20,11 @@ volumes = ec2_client.describe_volumes(
 
 instance_volume = volumes['Volumes'][0]
 
-snapshots = ec2_client.describe_volumes(
+snapshots = ec2_client.describe_snapshots(
     OwnerIds=['self'],
     Filters=[
         {
-            'Name': 'volume-id',
+            'Name': 'vol-0c38a82154de76629',
             'Values': [instance_volume['VolumeId']]
         }
     ]
@@ -50,7 +50,7 @@ new_volume = ec2_client.create_volume(
 
 # Check the state of the volume until it becomes available and attach new volume to the instance
 while True:
-    ec2_resource.Volume(new_volume['VolumeId'])
+    vol = ec2_resource.Volume(new_volume['VolumeId'])
     print(vol.state)
     if vol.state == 'available':
         ec2_resource.Instance(instance_id).attach_volume(

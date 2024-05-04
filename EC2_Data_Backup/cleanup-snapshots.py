@@ -21,11 +21,11 @@ for volume in volumes['Volumes']:
     snapshots = ec2_client.describe_snapshots(
         OwnerIds=['self'],
         Filters=[
-        {
-            'Name': 'volume-id',
-            'Values': [volume[VolumeId]]
-        }
-    ]
+            {
+                'Name': 'volume-id',
+                'Values': [volume[VolumeId]]
+            }
+        ]
     )
 
     # Sort the snapshot lists by StartTime, with reverse=True we sort them in DESC order

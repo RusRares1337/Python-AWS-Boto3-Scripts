@@ -6,7 +6,7 @@ import schedule
 
 ec2_client = boto3.client('ec2', region_name='eu-west-3')
 
-def create_voume_snapshots():
+def create_volume_snapshots():
     volumes = ec2_client.describe_volumes(
         Filters=[
             {
@@ -22,8 +22,7 @@ def create_voume_snapshots():
         print(new_snapshot)
 
 
-schedule.every().day.do(create_voume_snapshots)
+schedule.every().day.do(create_volume_snapshots)
 
 while True:
     schedule.run_pending()
-

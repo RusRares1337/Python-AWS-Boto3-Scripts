@@ -24,7 +24,7 @@ snapshots = ec2_client.describe_snapshots(
     OwnerIds=['self'],
     Filters=[
         {
-            'Name': 'vol-0c38a82154de76629',
+            'Name': 'volume-id',
             'Values': [instance_volume['VolumeId']]
         }
     ]

@@ -32,9 +32,10 @@ try:
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect('15.237.181.14', username='ubuntu', key_filename='/Users/raresrus/.ssh/aws.pem')
-        stdin, stdout, stderr = ssh.exec_command('docker ps')
-        print(stdin)
-        print(stdout)
+        stdin, stdout, stderr = ssh.exec_command('docker start edcdc481487d')
+        print(stdout.readlines())
+        ssh.close()
+        print('Application restarted')
 except Exception as ex:
     print(f'Connection error happened: {ex}')
     msg = 'Application not accesible at all.'

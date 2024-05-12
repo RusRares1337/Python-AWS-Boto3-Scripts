@@ -14,7 +14,7 @@ EMAIL_ADDRESS = os.environ.get('EMAIL_ADDRESS')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
 
-def restart_server_and_container(:)
+def restart_server_and_container():
     # restart ec2 server
     print('Rebooting the server...')
     nginx_server = ec2.client.reboot_instances(InstanceIds=['i-0f10b0b7aed92bf0b'])
@@ -47,7 +47,7 @@ def restart_container():
     print(stdout.readlines())
     ssh.close()
 
-def monitor_application(:)
+def monitor_application():
     try:
         response = requests.get('http://15.237.181.14:8080/')
         if response.status_code == 200:

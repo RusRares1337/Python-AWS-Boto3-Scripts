@@ -5,6 +5,7 @@
 import requests
 import smtplib
 import os
+import paramiko
 
 EMAIL_ADDRESS = os.environ.get('EMAIL_ADDRESS')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
@@ -26,6 +27,14 @@ try:
         print('Application Down. Fix it!')
         msg = f'Application returned {response.status_code}'
         send_notification(msg)
+
+        # restart the application
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect('15.237.181.14', username='ubuntu', key_filename='/Users/raresrus/.ssh/aws.pem')
+        stdin, stdout, stderr = ssh.exec_command('docker ps')
+        print(stdin)
+        print(stdout)
 except Exception as ex:
     print(f'Connection error happened: {ex}')
     msg = 'Application not accesible at all.'

@@ -8,6 +8,7 @@ import os
 import paramiko
 import boto3
 import time
+import schedule
 
 EMAIL_ADDRESS = os.environ.get('EMAIL_ADDRESS')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
@@ -46,17 +47,24 @@ def restart_container():
     print(stdout.readlines())
     ssh.close()
 
-try:
-    response = requests.get('http://15.237.181.14:8080/')
-    if response.status_code == 200:
-        print("Application is running successfully")
-    else:
-        print('Application Down. Fix it!')
-        msg = f'Application returned {response.status_code}'
+def monitor_application(:)
+    try:
+        response = requests.get('http://15.237.181.14:8080/')
+        if response.status_code == 200:
+            print("Application is running successfully")
+        else:
+            print('Application Down. Fix it!')
+            msg = f'Application returned {response.status_code}'
+            send_notification(msg)
+            restart_container()
+    except Exception as ex:
+        print(f'Connection error happened: {ex}')
+        msg = 'Application not accesible at all.'
         send_notification(msg)
-        restart_container()
-except Exception as ex:
-    print(f'Connection error happened: {ex}')
-    msg = 'Application not accesible at all.'
-    send_notification(msg)
-    restart_server_and_container()
+        restart_server_and_container()
+
+
+schedule.every(5).minutes.do(monitor_application)
+
+while True:
+    schedule.run_pending()

@@ -12,6 +12,22 @@ import time
 EMAIL_ADDRESS = os.environ.get('EMAIL_ADDRESS')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
+
+def restart_server_and_container(:)
+    # restart ec2 server
+    print('Rebooting the server...')
+    nginx_server = ec2.client.reboot_instances(InstanceIds=['i-0f10b0b7aed92bf0b'])
+    nginx_server.reboot_instances()
+
+    # restart the application
+    while True:
+        nginx_server = ec2.client.reboot_instances(InstanceIds=['i-0f10b0b7aed92bf0b'])
+        if nginx_server.instancestatuses.instancestate == 'running':
+            time.sleep(5)
+            restart_container()
+            break
+
+
 def send_notification(email_msg):
     print('Sending an email..')
     with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
@@ -43,16 +59,4 @@ except Exception as ex:
     print(f'Connection error happened: {ex}')
     msg = 'Application not accesible at all.'
     send_notification(msg)
-
-    # restart ec2 server
-    print('Rebooting the server...')
-    nginx_server = ec2.client.reboot_instances(InstanceIds=['i-0f10b0b7aed92bf0b'])
-    nginx_server.reboot_instances()
-
-    # restart the application
-    while True:
-        nginx_server = ec2.client.reboot_instances(InstanceIds=['i-0f10b0b7aed92bf0b'])
-        if nginx_server.instancestatuses.instancestate == 'running':
-            time.sleep(5)
-            restart_container()
-            break
+    restart_server_and_container()

@@ -7,7 +7,7 @@ import smtplib
 import os
 import paramiko
 import boto3
-
+import time
 
 EMAIL_ADDRESS = os.environ.get('EMAIL_ADDRESS')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
@@ -50,4 +50,9 @@ except Exception as ex:
     nginx_server.reboot_instances()
 
     # restart the application
-    restart_container()
+    while True:
+        nginx_server = ec2.client.reboot_instances(InstanceIds=['i-0f10b0b7aed92bf0b'])
+        if nginx_server.instancestatuses.instancestate == 'running':
+            time.sleep(5)
+            restart_container()
+            break

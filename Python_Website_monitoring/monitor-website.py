@@ -6,6 +6,8 @@ import requests
 import smtplib
 import os
 import paramiko
+import boto3
+
 
 EMAIL_ADDRESS = os.environ.get('EMAIL_ADDRESS')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
@@ -40,3 +42,9 @@ except Exception as ex:
     print(f'Connection error happened: {ex}')
     msg = 'Application not accesible at all.'
     send_notification(msg)
+
+    # restart ec2 server
+    nginx_server = ec2.client.reboot_instances(InstanceIds=['i-0f10b0b7aed92bf0b'])
+    nginx_server.reboot_instances()
+
+    # restart the application
